@@ -377,8 +377,12 @@ def main():
     # blueprints for shield generators
     shield_generator_engineering_blueprints = list()
     for blueprint_symbol in MODULE_SHIELD_GENERATOR_ENGINEERING_BLUEPRINTS:
+        # extract only the best value from the features
+        features = dict()
+        for k, v in blueprints[blueprint_symbol]["grades"]["5"]["features"].items():
+            features.setdefault(k, v[1])
         sg_blueprint = {"symbol": blueprints[blueprint_symbol]["fdname"],
-                        "features": blueprints[blueprint_symbol]["grades"]["5"]["features"],
+                        "features": features,
                         "name": blueprints[blueprint_symbol]["name"]}
         shield_generator_engineering_blueprints.append(sg_blueprint)
 
