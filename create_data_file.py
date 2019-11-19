@@ -234,17 +234,17 @@ class ShieldBooster:
                               "LessIsGood": 0})
         if default_booster.kinres != self.kinres:
             modifiers.append({"Label": "KineticResistance",
-                              "Value": self.kinres * 100,
+                              "Value": round(self.kinres * 100, 4),
                               "OriginalValue": default_booster.kinres * 100,
                               "LessIsGood": 0})
         if default_booster.thermres != self.thermres:
             modifiers.append({"Label": "ThermicResistance",
-                              "Value": self.thermres * 100,
+                              "Value": round(self.thermres * 100, 4),
                               "OriginalValue": default_booster.thermres * 100,
                               "LessIsGood": 0})
         if default_booster.explres != self.explres:
             modifiers.append({"Label": "ExplosiveResistance",
-                              "Value": self.explres * 100,
+                              "Value": round(self.explres * 100, 4),
                               "OriginalValue": default_booster.explres * 100,
                               "LessIsGood": 0})
 
