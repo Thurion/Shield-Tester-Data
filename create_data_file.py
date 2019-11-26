@@ -77,6 +77,7 @@ class Ship:
         self.fuel_tank = ""
         self.base_shield_strength = 0
         self.hull_mass = 0
+        self.slots = ""
 
     def generate_data_entry(self):
         modules = list()
@@ -98,7 +99,8 @@ class Ship:
                 "baseShieldStrength": self.base_shield_strength,
                 "hullMass": self.hull_mass,
                 "utility_slots": self.utility_slots_amount,
-                "highest_internal": self.highest_internal}
+                "highest_internal": self.highest_internal,
+                "slot_layout": self.slots}
 
     @staticmethod
     def _extract_class_and_grade(s: str) -> Optional[Tuple[int, str]]:
@@ -142,6 +144,7 @@ class Ship:
         ship.fuel_tank = Ship._search_standard_module(standard_modules.get(MODULE_NAME_FUEL_TANK), standards[6])
         ship.armour = "{}_armour_grade1".format(ship.symbol)
 
+        ship.slots = json_ship["slots"]
         ship.highest_internal = json_ship["slots"]["internal"][0]
         for hardpoint in json_ship["slots"]["hardpoints"]:
             if hardpoint == 0:
