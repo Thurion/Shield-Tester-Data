@@ -130,7 +130,7 @@ class Ship:
         json_ship = next(iter(json_ships.values()))  # only 1 ship per file
         ship = Ship()
         ship.name = json_ship["properties"]["name"]
-        ship.symbol = ship_name_to_symbol.get(json_ship["properties"]["name"].lower())
+        ship.symbol = ship_name_to_symbol.get(json_ship["properties"]["name"].lower(), json_ship["properties"]["name"])  # avoid None
         ship.base_shield_strength = json_ship["properties"]["baseShieldStrength"]
         ship.hull_mass = json_ship["properties"]["hullMass"]
 
@@ -350,13 +350,16 @@ def main():
             standard_modules.setdefault(standard_module, json.load(module_file))
 
     # ship name in game vs internal name
-    ship_name_to_symbol = dict()
-    ship_symbol_to_name = dict()
+    ship_name_to_symbol = {"cobra mk iii": "CobraMkIII",
+                           "cobra mk iv": "CobraMkIV",
+                           "krait mk ii": "Krait_MkII",
+                           "viper": "Viper",
+                           "viper mk iv": "Viper_MkIV"}
     with open(PATH_TO_SHIPYARD, "r") as shipyard_file:
         reader = csv.DictReader(shipyard_file)
         for row in reader:
             ship_name_to_symbol.setdefault(row["name"].lower(), row["symbol"])
-            ship_symbol_to_name.setdefault(row["symbol"], row["name"])
+    ship_symbol_to_name = dict((v, k) for k, v in ship_name_to_symbol.items())
 
     # ships
     for root, dirs, files in os.walk(PATH_TO_SHIPS):
